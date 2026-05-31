@@ -1,0 +1,7 @@
+model_path: outputs/dpo
+host: 127.0.0.1
+port: 8000
+tensor_parallel_size: 1
+max_model_len: 2048
+gpu_memory_utilization: 0.85
+

@@ -1,0 +1,23 @@
+preference_dataset_path: data/samples/preference_sample.jsonl
+sft_model_path: outputs/sft
+output_dir: outputs/dpo
+beta: 0.1
+learning_rate: 0.00005
+batch_size: 1
+gradient_accumulation_steps: 8
+num_train_epochs: 1
+max_steps: -1
+warmup_ratio: 0.03
+logging_steps: 10
+eval_steps: 100
+save_steps: 100
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+seed: 42
+

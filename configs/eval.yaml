@@ -1,0 +1,22 @@
+eval_prompts_path: data/samples/eval_prompts_sample.jsonl
+baseline_model: Qwen/Qwen2.5-0.5B-Instruct
+candidate_model: outputs/dpo
+candidate_base_model: null
+template_backend: default_chat_template
+max_new_tokens: 256
+temperature: 0.0
+top_p: 1.0
+metrics:
+  - response_length
+  - refusal_rate
+  - format_compliance
+  - constraint_checks
+  - keyword_coverage
+regression_thresholds:
+  format_compliance_rate: 0.05
+  refusal_rate: 0.10
+  must_include_coverage: 0.10
+  must_not_include_violation_rate: 0.05
+  avg_word_count: 40.0
+  category_score: 0.05
+report_output_path: reports/sample/eval_report.md

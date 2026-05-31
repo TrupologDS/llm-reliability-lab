@@ -1,0 +1,6 @@
+enabled: true
+tracking_uri: mlruns
+experiment_name: llm-reliability-lab
+run_name: null
+log_artifacts: true
+log_traces: false

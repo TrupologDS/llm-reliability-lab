@@ -1,0 +1,10 @@
+model_name_or_path: Qwen/Qwen2.5-0.5B-Instruct
+tokenizer_name_or_path: null
+torch_dtype: bfloat16
+trust_remote_code: false
+load_in_4bit: false
+load_in_8bit: false
+max_seq_length: 2048
+device_map: auto
+template_backend: default_chat_template
+seed: 42

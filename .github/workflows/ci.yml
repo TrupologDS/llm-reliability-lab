@@ -1,0 +1,80 @@
+name: CI
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+
+      - name: Lint
+        run: python -m ruff check .
+
+      - name: Format check
+        run: python -m ruff format --check .
+
+      - name: Hidden Unicode check
+        run: make check-hidden-unicode
+
+      - name: Sample data preparation
+        run: make prepare-sample-data
+
+      - name: Sample evaluation
+        run: make evaluate-sample
+
+      - name: Sample reports
+        run: make report-sample
+
+      - name: Build real eval suite
+        run: make build-real-eval-suite
+
+      - name: Validate small SFT dataset
+        run: make validate-sft-real
+
+      - name: Test
+        run: python -m pytest
+
+  train-import-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install train dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[train,dev]"
+
+      - name: Import training modules
+        run: |
+          python - <<'PY'
+          import llm_reliability_lab.dpo
+          import llm_reliability_lab.inference
+          import llm_reliability_lab.sft
+
+          print("train import smoke passed")
+          PY
